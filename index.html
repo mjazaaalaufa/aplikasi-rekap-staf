@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <title>Latihan Formulir</title>
+    <!-- Baris di bawah ini menghubungkan HTML dengan CSS -->
+    <link rel="stylesheet" href="style.css"> 
+
+</head>
+<body>
+
+  <!-- Ini adalah kontainer utama formulir kita -->
+  <div class="kartu-form">
+    
+    <h2>Formulir Data Staf</h2>
+    <p>Silakan isi detail untuk pendaftaran sistem.</p>
+
+    <form>
+      <label>Nama Lengkap:</label><br>
+      <!-- Tambahkan id="inputNama" -->
+      <input type="text" id="inputNama" placeholder="Masukkan nama Anda"><br><br>
+
+      <label>Divisi:</label><br>
+      <!-- Tambahkan id="pilihDivisi" -->
+      <select id="pilihDivisi">
+        <option>Pilih Divisi...</option>
+        <option>Administrasi</option>
+        <option>Logistik</option>
+        <option>Lapangan</option>
+      </select><br><br>
+
+      <!-- Tambahkan id="tombolSimpan" -->
+      <button type="button" id="tombolSimpan">Simpan Data</button>
+    </form>
+
+    <!-- KITA TAMBAHKAN BAGIAN TABEL DI SINI -->
+    <hr style="margin-top: 30px; margin-bottom: 20px;">
+    
+    <h3>Rekap Data Staf</h3>
+    <!-- Kita beri ID 'tabelData' agar mudah dipanggil oleh JS -->
+    <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Divisi</th>
+          <th>Aksi</th> <!-- TAMBAHKAN BARIS INI -->
+        </tr>
+      </thead>
+      <!-- Bagian <tbody> inilah yang akan diisi oleh JavaScript nanti -->
+      <tbody id="tabelData">
+        <!-- Kosong. Menunggu JavaScript bekerja -->
+      </tbody>
+    </table>
+
+  </div> <!-- Ini penutup <div class="kartu-form"> yang sudah ada -->
+
+<!-- Baris ini menghubungkan HTML dengan JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

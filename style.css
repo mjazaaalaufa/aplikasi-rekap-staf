@@ -1,0 +1,41 @@
+/* Ini adalah file CSS. Kita akan mengatur tampilan di sini */
+
+/* Mengatur latar belakang layar utama */
+body {
+  background-color: #f3f4f6;
+  font-family: Arial, sans-serif;
+  padding: 50px; /* Memberi jarak agar form tidak mepet layar */
+}
+
+/* Mengatur kotak formulir (kartu) */
+.kartu-form {
+  background-color: white;
+  width: 400px;
+  padding: 30px;
+  border-radius: 10px; /* Membuat ujung kotak melengkung */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Memberi efek bayangan tipis */
+}
+
+/* Mempercantik input teks dan dropdown */
+input, select {
+  width: 100%; /* Mengisi lebar kotak penuh */
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Mempercantik tombol */
+button {
+  background-color: #2563eb; /* Warna biru profesional */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #1d4ed8; /* Biru yang lebih gelap saat kursor diarahkan */
+}
