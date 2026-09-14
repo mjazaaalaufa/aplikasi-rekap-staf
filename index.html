@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <title>Latihan Formulir</title>
+    <title>Latihan Formulir Data Staf</title>
     <!-- Baris di bawah ini menghubungkan HTML dengan CSS -->
     <link rel="stylesheet" href="style.css"> 
-
 </head>
 <body>
 
@@ -20,11 +17,9 @@
 
     <form>
       <label>Nama Lengkap:</label><br>
-      <!-- Tambahkan id="inputNama" -->
       <input type="text" id="inputNama" placeholder="Masukkan nama Anda"><br><br>
 
       <label>Divisi:</label><br>
-      <!-- Tambahkan id="pilihDivisi" -->
       <select id="pilihDivisi">
         <option>Pilih Divisi...</option>
         <option>Administrasi</option>
@@ -32,42 +27,35 @@
         <option>Lapangan</option>
       </select><br><br>
 
-      <!-- Tambahkan id="tombolSimpan" -->
       <button type="button" id="tombolSimpan">Simpan Data</button>
       
-      <!-- TAMBAHKAN TOMBOL BARU INI -->
       <button type="button" id="tombolTarikData" style="background-color: #10b981; margin-top: 10px;">
         Tarik Data Pusat (API)
       </button>
     </form>
 
-    <!-- KITA TAMBAHKAN BAGIAN TABEL DI SINI -->
     <hr style="margin-top: 30px; margin-bottom: 20px;">
     
     <h3>Rekap Data Staf</h3>
-    <!-- Kita beri ID 'tabelData' agar mudah dipanggil oleh JS -->
     <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
       <thead>
         <tr>
           <th>Nama</th>
           <th>Divisi</th>
-          <th>Aksi</th> <!-- TAMBAHKAN BARIS INI -->
+          <th>Aksi</th>
         </tr>
       </thead>
-      <!-- Bagian <tbody> inilah yang akan diisi oleh JavaScript nanti -->
       <tbody id="tabelData">
-        <!-- Kosong. Menunggu JavaScript bekerja -->
+        <!-- Menunggu JavaScript mengambil data dari Supabase -->
       </tbody>
     </table>
 
-  </div> <!-- Ini penutup <div class="kartu-form"> yang sudah ada -->
+  </div>
 
-<!-- Baris ini menghubungkan HTML dengan JavaScript -->
+  <!-- 1. PANGGIL LIBRARY SUPABASE DAHULU -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- 2. BARU PANGGIL SCRIPT KITA -->
   <script src="script.js"></script>
-
-  <!-- Masukkan ini di dalam tag <head> atau sebelum </body> -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
-
 </body>
 </html>
