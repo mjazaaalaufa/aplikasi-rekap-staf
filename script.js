@@ -1,4 +1,5 @@
 const tombol = document.getElementById("tombolSimpan");
+const tombolTarik = document.getElementById("tombolTarikData");
 const nama = document.getElementById("inputNama");
 const divisi = document.getElementById("pilihDivisi");
 const areaTabel = document.getElementById("tabelData");
@@ -112,3 +113,50 @@ tombol.addEventListener("click", function() {
 
 // Perintah wajib untuk menggambar tabel sesaat setelah halaman selesai di-refresh
 gambarUlangTabel();
+
+// INSTRUKSI SAAT TOMBOL TARIK DATA DIKLIK
+// Kita menggunakan kata sandi "async" karena proses mengambil data dari internet butuh waktu tunggu.
+tombolTarik.addEventListener("click", async function() {
+  
+  // Ubah teks tombol agar pengguna tahu sistem sedang bekerja
+  tombolTarik.innerText = "Sedang mengambil data...";
+
+  try {
+    // 1. MENGIRIM KURIR (API CALL)
+    // Kata "await" menyuruh JavaScript: "Berhenti di sini dan tunggu sampai kurir kembali bawa data!"
+    let respons = await fetch("https://jsonplaceholder.typicode.com/users");
+    
+    // 2. MEMBUKA PAKET (PARSING JSON)
+    // Setelah data tiba, terjemahkan dari format teks JSON menjadi Array yang dipahami JavaScript
+    let dataDariPusat = await respons.json();
+
+    // 3. MEMASUKKAN DATA KE DALAM PENYIMPANAN KITA
+    // API ini mengembalikan 10 data orang. Kita ambil maksimal 3 saja sebagai contoh.
+    for (let i = 0; i < 3; i++) {
+      let orang = dataDariPusat[i];
+      
+      // Susun agar formatnya cocok dengan data aplikasi kita
+      let dataBaru = {
+        namaPendaftar: orang.name, 
+        divisiPendaftar: "Data Pusat" // Kita beri label khusus
+      };
+      
+      // Masukkan ke array dan simpan ke localStorage
+      daftarStaf.push(dataBaru);
+    }
+    
+    // Simpan ke memori browser
+    localStorage.setItem("dataStafKita", JSON.stringify(daftarStaf));
+    
+    // Gambar ulang tabelnya agar data baru muncul
+    gambarUlangTabel();
+
+    // Kembalikan teks tombol
+    tombolTarik.innerText = "Selesai! Tarik Data Lagi";
+
+  } catch (error) {
+    // Jika internet putus atau server pusat mati, tampilkan ini
+    alert("Gagal mengambil data dari pusat. Periksa koneksi internet Anda.");
+    tombolTarik.innerText = "Tarik Data Pusat (API)";
+  }
+});
