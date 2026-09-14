@@ -1,10 +1,11 @@
 // ==========================================
 // 1. KONEKSI KE SUPABASE CLOUD
-// Ganti teks di bawah dengan URL dan Key dari dashboard Supabase milikmu!
 // ==========================================
 const SUPABASE_URL = "https://hratlwlzcbpkoqgnqpgm.supabase.co"; 
 const SUPABASE_KEY = "sb_publishable_cQCwOmk-c_3FbQRJBsbcJQ_pWchppvh";
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Mengubah nama variabel dari 'supabase' jadi 'supabaseClient' agar tidak bentrok
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Ambil elemen HTML
 const tombol = document.getElementById("tombolSimpan");
@@ -15,26 +16,25 @@ const areaTabel = document.getElementById("tabelData");
 
 // ==========================================
 // 2. FUNGSI UNTUK MENGAMBIL & MENGGAMBAR DATA (READ)
-// Menggunakan 'async' karena menarik data dari internet butuh waktu
 // ==========================================
 async function gambarUlangTabel() {
   areaTabel.innerHTML = "<tr><td colspan='3'>Memuat data dari cloud...</td></tr>";
 
-  // Minta data dari tabel 'staf' yang ada di Supabase
-  const { data: daftarStaf, error } = await supabase
+  // Minta data dari tabel 'staf' di Supabase Cloud
+  const { data: daftarStaf, error } = await supabaseClient
     .from("staf")
     .select("*");
 
   if (error) {
     console.error("Gagal mengambil data dari cloud:", error);
-    areaTabel.innerHTML = "<tr><td colspan='3'>Gagal memuat data!</td></tr>";
+    areaTabel.innerHTML = "<tr><td colspan='3'>Gagal memuat data! Periksa RLS/Koneksi.</td></tr>";
     return;
   }
 
   // Bersihkan tabel sebelum membuat baris baru
   areaTabel.innerHTML = "";
 
-  // Looping data yang didapat dari server Supabase
+  // Looping data dari server
   for (let i = 0; i < daftarStaf.length; i++) {
     let staf = daftarStaf[i];
 
@@ -53,19 +53,17 @@ async function gambarUlangTabel() {
     tombolHapus.style.backgroundColor = "#ef4444";
     tombolHapus.style.padding = "6px 12px";
 
-    // Panggil server untuk menghapus data berdasarkan ID uniknya di cloud
     tombolHapus.addEventListener("click", async function () {
       tombolHapus.innerText = "...";
       
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from("staf")
         .delete()
-        .eq("id", staf.id); // Hapus baris yang ID-nya cocok
+        .eq("id", staf.id);
 
       if (error) {
         alert("Gagal menghapus data di cloud!");
       } else {
-        // Refresh tabel setelah data terhapus di cloud
         gambarUlangTabel();
       }
     });
@@ -94,8 +92,7 @@ tombol.addEventListener("click", async function () {
 
   tombol.innerText = "Menyimpan...";
 
-  // Kirim data baru ke database Supabase di internet
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("staf")
     .insert([
       {
@@ -109,11 +106,8 @@ tombol.addEventListener("click", async function () {
   if (error) {
     alert("Gagal menyimpan ke Cloud: " + error.message);
   } else {
-    // Reset form
     nama.value = "";
     divisi.value = "Pilih Divisi...";
-
-    // Minta data terbaru dari cloud agar tabel ter-update
     gambarUlangTabel();
   }
 });
@@ -125,11 +119,9 @@ tombolTarik.addEventListener("click", async function () {
   tombolTarik.innerText = "Sedang mengambil data...";
 
   try {
-    // 1. Ambil data dari API publik
     let respons = await fetch("https://jsonplaceholder.typicode.com/users");
     let dataDariPusat = await respons.json();
 
-    // 2. Format 3 data pertama agar sesuai struktur tabel Supabase kita
     let dataSiapKirim = [];
     for (let i = 0; i < 3; i++) {
       dataSiapKirim.push({
@@ -138,8 +130,7 @@ tombolTarik.addEventListener("click", async function () {
       });
     }
 
-    // 3. Simpan sekaligus 3 data tersebut ke Supabase Cloud!
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from("staf")
       .insert(dataSiapKirim);
 
