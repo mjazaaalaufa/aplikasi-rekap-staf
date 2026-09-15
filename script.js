@@ -149,3 +149,28 @@ tombolTarik.addEventListener("click", async function () {
 
 // Jalankan fungsi gambarUlangTabel saat pertama kali halaman dibuka
 gambarUlangTabel();
+
+// ==========================================
+// 5. FITUR PENCARIAN (FILTER) REAL-TIME
+// ==========================================
+const inputCari = document.getElementById("inputCari");
+
+inputCari.addEventListener("keyup", function() {
+  let kataKunci = inputCari.value.toLowerCase(); // Ubah ketikan jadi huruf kecil semua
+  let barisTabel = areaTabel.getElementsByTagName("tr"); // Ambil semua baris di tabel
+
+  for (let i = 0; i < barisTabel.length; i++) {
+    let kolomNama = barisTabel[i].getElementsByTagName("td")[0]; // Fokus ke kolom pertama (Nama)
+    
+    if (kolomNama) {
+      let teksNama = kolomNama.innerText.toLowerCase();
+      
+      // Jika nama mengandung kata kunci, biarkan muncul. Jika tidak, hilangkan!
+      if (teksNama.includes(kataKunci)) {
+        barisTabel[i].style.display = "";
+      } else {
+        barisTabel[i].style.display = "none"; 
+      }
+    }
+  }
+});
